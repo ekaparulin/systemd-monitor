@@ -12,7 +12,7 @@ Systemd service or timer monitor with alerting to:
 
 - ansible 2.9.9
 - SSH config to reach the hosts per IP address
-- Centos VMs
+- Centos VMs (yum based)
 
 ### Depoyment
 
