@@ -1,0 +1,76 @@
+---
+- name: Install yum packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - python3
+    - cairo-devel
+    - gcc
+    - python3-devel
+    - gobject-introspection-devel
+    - cairo-gobject-devel
+
+- name: Install Python packages
+  pip:
+    name: "{{ item }}"
+    executable: pip3
+  loop:
+    - pydbus
+    - pyyaml
+    - gobject 
+    - PyGObject
+
+- name: Provision /opt/systemd-monitor directory structure
+  file:
+    path: /opt/systemd-monitor/{{item}}
+    state: directory
+  loop:
+    - bin
+    - systemd
+    - etc
+
+- name: Provision scripts
+  template:
+    src: ../../../monitor/monitor.py
+    dest: /opt/systemd-monitor/bin/systemd-monitor.py
+    mode: '0775'
+
+- name: Provision configs
+  template:
+    src: configs/config.yaml
+    dest: /opt/systemd-monitor/etc/systemd-monitor.yaml
+    mode: '0644'
+
+- name: Provision systemd configs
+  template:
+    src: systemd/{{item}}
+    dest: /opt/systemd-monitor/systemd/{{item}}
+  loop:
+    - systemd-monitor.service
+    - last.target
+
+- name: Link systemd configs
+  file:
+    src: /opt/systemd-monitor/systemd/{{item}}
+    dest: /etc/systemd/system/{{item}}
+    state: link
+  loop:
+    - systemd-monitor.service
+    - last.target
+
+- name: Link default target
+  file:
+    src: /etc/systemd/system/last.target
+    dest: /etc/systemd/system/default.target
+    state: link
+
+- name: Enable systemd services
+  systemd:
+    name: systemd-monitor.service
+    state: started
+    enabled: yes
+
+- name: Reload all systemd configs
+  systemd:
+    daemon_reload: yes

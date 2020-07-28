@@ -1,0 +1,16 @@
+all:
+  hosts:
+    # Add host list here
+    # hosname_or_ip1:
+    # hosname_or_ip2:
+  vars:
+      # - some_service.service
+      # - some_timer.timer
+  children:
+    some_group:
+      hosts:
+        # 10.60.33.11:
+        #    systemd_units:
+        #      - some_other.service
+        #      - some_any_other.timer
+

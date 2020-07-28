@@ -1,0 +1,12 @@
+[Unit]
+Description=Monitor systemd services and timers
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/opt/systemd-monitor/bin/systemd-monitor.py /opt/systemd-monitor/etc/systemd-monitor.yaml
+User=root
+Group=root
+
+[Install]
+WantedBy=custom.target

@@ -1,0 +1,9 @@
+---
+watch:
+    {% for unit in systemd_units %}
+    - {{ unit }}
+    {% endfor %}
+
+opsgenie:
+    server: eu.opsgenie.com
+    apikey: {{ lookup('env','OPSGENIE_APIKEY') }}
