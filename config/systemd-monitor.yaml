@@ -1,0 +1,12 @@
+---
+watch:
+  # - unit1.service
+  # - unit2.service
+  # - unit3.service
+
+# Uncomment if you want to set Opsgenie specific data her erather via env vars
+#opsgenie:
+    # Set it here or pass as OPSGENIE_SERVER environment variable
+    #server: eu.opsgenie.com
+    # Set it here or pass as OPSGENIE_APIKEY environment variable
+    #apikey: xxxxx
