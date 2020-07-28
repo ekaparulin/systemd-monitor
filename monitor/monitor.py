@@ -133,6 +133,9 @@ if __name__ == '__main__':
             os.environ['OPSGENIE_APIKEY'] = os.environ.get('OPSGENIE_APIKEY', config['opsgenie']['apikey'])
     
     # Build watchers
+    assert 'watch' in config
+    assert config['watch'] != None
+
     units = []
     for unit in config['watch']:
         units.append(Unit(unit))
